@@ -14,7 +14,7 @@
     <main>
         <h2>Search for Books</h2>
         <!-- Search Form -->
-        <form action="results.html" method="get">
+        <form id="searchForm">
             <input type="text" name="query" id="searchQuery" placeholder="Enter book title..." required>
             <button type="submit">Search</button>
         </form>
@@ -23,5 +23,21 @@
     <footer>
         <p>© 2025 Library Website</p>
     </footer>
+
+    <script>
+        // Handle form submission and store search query
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent form from submitting normally
+
+            // Get the search query
+            const query = document.getElementById('searchQuery').value.trim();
+
+            // Store query in sessionStorage
+            sessionStorage.setItem('query', query);
+
+            // Redirect to results page
+            window.location.href = 'results.html';
+        });
+    </script>
 </body>
 </html>
