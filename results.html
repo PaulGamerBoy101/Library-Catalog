@@ -27,11 +27,15 @@
         // Function to fetch and parse the RSS feed based on the query
         function fetchRSS(query) {
             const rssURL = `https://catalog.library.washco.utah.gov/client/rss/hitlist/default/qu=${encodeURIComponent(query)}&te=ILS`;
-            fetch(rssURL)
-                .then(response => response.text())  // Get the RSS feed as text
+
+            // Use a public CORS proxy (AllOrigins or another proxy)
+            const corsProxyURL = `https://api.allorigins.win/get?url=${encodeURIComponent(rssURL)}`;
+
+            fetch(corsProxyURL)
+                .then(response => response.json())  // AllOrigins returns JSON
                 .then(data => {
                     const parser = new DOMParser();
-                    const xml = parser.parseFromString(data, 'application/xml');
+                    const xml = parser.parseFromString(data.contents, 'application/xml');
                     const items = xml.querySelectorAll('item'); // Select all RSS items
 
                     const resultsContainer = document.getElementById('searchResults');
